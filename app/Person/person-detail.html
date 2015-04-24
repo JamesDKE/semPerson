@@ -1,0 +1,17 @@
+<div>
+    <img ng-src="https://graph.facebook.com/peter.helmberger/picture?width=200&height=200" class="img-rounded">
+</div>
+
+<h1>{{person["subject"]["value"]}}</h1>
+
+<p>{{person["givenname"]["value"]}} {{person["familyname"]["value"]}}</p>
+
+
+<div class="panel panel-primary" ng-repeat="r in result">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{r.p.value}}</h3>
+    </div>
+    <div class="panel-body">
+        {{r.o.value}}
+    </div>
+</div>
