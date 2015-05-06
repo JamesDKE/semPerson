@@ -1,27 +1,4 @@
-'use strict';
-
-// Declare app level module which depends on views, and components
-var app = app || angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version',
-    'personControllers',
-    'ngMap'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
-      when('/persons', {
-        templateUrl: 'person/person-list.html',
-        controller: 'PersonListCtrl'
-      }).
-      when('/persons/:personId', {
-        templateUrl: 'person/person-detail.html',
-        controller: 'PersonDetailCtrl'
-      }).
-      otherwise({redirectTo: '/persons'});
-}]);
-
+var app = app || angular.module('myApp', ['ngMap']);
 app.controller('MapCoordinatesCtrl', function($scope, $compile) {
     var TILE_SIZE = 256;
 
@@ -84,26 +61,4 @@ app.controller('MapCoordinatesCtrl', function($scope, $compile) {
             Math.floor($scope.pixelCoordinate.x / TILE_SIZE),
             Math.floor($scope.pixelCoordinate.y / TILE_SIZE));
     });
-});
-
-//WIKIDATA
-
-app.factory('wikiService', function($http) {
-
-    var wikiService = {
-        get: function(country) {
-            return $http.jsonp('http://wikidata.org/w/api.php?action=query&titles='+country.name.toLowerCase()+'&prop=info&format=json&prop=extracts&callback=JSON_CALLBACK');
-        }
-    };
-
-    return wikiService;
-});
-
-app.controller('MainController', function($scope, wikiService) {
-
-    wikiService.get({name: 'IBM'}).then(function(data) {
-        console.log(data);
-        $scope.wikiData = data.data;
-    });
-
 });

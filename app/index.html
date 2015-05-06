@@ -38,12 +38,11 @@
 
   <div>Angular seed app: v<span app-version></span></div>
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
+  <div ng-controller="MainController">
+    <pre ng-bind="wikiData | json"></pre>
+  </div>
 
-  <!--<map center="-34.397, 150.644" zoom="8"></map>
--->
+
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>
