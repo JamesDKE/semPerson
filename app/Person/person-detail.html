@@ -16,14 +16,22 @@
 <p>{{person["givenname"]["value"]}} {{person["familyname"]["value"]}}</p>
 
 
-<div class="panel panel-primary" ng-repeat="r in result">
-    <div class="panel-heading">
-        <h3 class="panel-title">{{r.p.value}}</h3>
+<form class="form-horizontal" ng-class="">
+    <div class="form-group" ng-repeat="r in result">
+        <label for="inputEmail3" class="col-sm-2 control-label">{{r.p.value.substr(r.p.value.lastIndexOf('/')+1)}}</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputEmail3" placeholder="Email" value="{{r.o.value}}">
+        </div>
     </div>
-    <div class="panel-body">
-        {{r.o.value}}
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Speichern</button>
+        </div>
     </div>
-</div>
+</form>
+
+
 
 <div ng-controller="MapCoordinatesCtrl" class="ng-scope">
     <map center="41.850033,-87.6500523" zoom="3">
