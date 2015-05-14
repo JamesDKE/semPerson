@@ -64,6 +64,7 @@ personControllers.controller("PersonListCtrl", function ($rootScope, $scope, $ht
 
 
 
+
         //$scope.companies.push({ 'name':$scope.name, 'employees': $scope.employees, 'headoffice':$scope.headoffice });
         // Writing it to the server
         //
