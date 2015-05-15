@@ -85,25 +85,3 @@ app.controller('MapCoordinatesCtrl', function($scope, $compile) {
             Math.floor($scope.pixelCoordinate.y / TILE_SIZE));
     });
 });
-
-//WIKIDATA
-
-app.factory('wikiService', function($http) {
-
-    var wikiService = {
-        get: function(country) {
-            return $http.jsonp('http://wikidata.org/w/api.php?action=query&titles='+country.name.toLowerCase()+'&prop=info&format=json&prop=extracts&callback=JSON_CALLBACK');
-        }
-    };
-
-    return wikiService;
-});
-
-app.controller('MainController', function($scope, wikiService) {
-
-    wikiService.get({name: 'IBM'}).then(function(data) {
-        console.log(data);
-        $scope.wikiData = data.data;
-    });
-
-});
