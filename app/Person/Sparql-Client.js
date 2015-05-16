@@ -43,7 +43,7 @@ function getLocationCoordinate(locationURI){
 
    var coordinates = [];
 
-   var query = "SELECT * WHERE { "+locationURI+" geo:lat ?lat } LIMIT 10";
+   var query = "SELECT * WHERE { "+locationURI+" geo:lat ?lat; geo:long ?long} LIMIT 10";
    var client = new SparqlClient(endpoint);
     console.log("Query to " + endpoint);
     console.log("Query: " + query);
@@ -54,13 +54,21 @@ function getLocationCoordinate(locationURI){
 
             var parsed = JSON.parse(result);
             coordinates[0] = parsed[1].results.bindings[0].lat.value;
+            coordinates[1] = parsed[1].results.bindings[0].long.value;
 
             console.log(coordinates[0]);
+            console.log(coordinates[1]);
 
             //console.log(result);
         });
 
-    var query = "SELECT * WHERE { "+locationURI+" geo:long ?long } LIMIT 10";
+    return coordinates;
+}
+
+function getLocationLabel(locationURI){
+    var label;
+
+    var query = "SELECT * WHERE { "+locationURI+" rdfs:label ?label FILTER (lang (?label) = \"en\")} LIMIT 10";
     var client = new SparqlClient(endpoint);
     console.log("Query to " + endpoint);
     console.log("Query: " + query);
@@ -70,15 +78,13 @@ function getLocationCoordinate(locationURI){
             var result = (JSON.stringify(arguments, null, 20, true));
 
             var parsed = JSON.parse(result);
-            coordinates[1] = parsed[1].results.bindings[0].long.value;
+            label = parsed[1].results.bindings[0].label.value;
 
-            console.log(coordinates[1]);
-
-            //console.log(result);
+            console.log(label);
         });
 
-    return coordinates;
+    return label;
 }
 
-getLocationCoordinate("<http://dbpedia.org/resource/Armonk,_New_York"+">");
+getLocationLabel("<http://dbpedia.org/resource/Armonk,_New_York"+">");
 //getLocation("IBM");
