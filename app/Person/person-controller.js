@@ -16,8 +16,7 @@ personControllers.controller("PersonListCtrl", function ($rootScope, $scope, $ht
 
     $scope.sparqlQuery = function () {
         var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
-        var q = 'SELECT * WHERE {  ?subject a foaf:Person. optional {?subject foaf:givenname ?Vorname}. optional {?subject foaf:family_name ?Nachname}.  optional {?subject foaf:nick ?Spitzname}. } LIMIT 25';
-
+        var q = 'SELECT * WHERE {  ?subject a foaf:Person. optional {?subject foaf:givenname ?Vorname}. optional {?subject foaf:family_name ?Nachname}.  optional {?subject foaf:nick ?Spitzname}. optional {?subject foaf:gender ?Geschlecht}. } LIMIT 25';
 
 
         $http.post("http://localhost:3030/test/query", pre + q, hd).
@@ -27,7 +26,7 @@ personControllers.controller("PersonListCtrl", function ($rootScope, $scope, $ht
                 $scope.results = data["results"]["bindings"];
                 $scope.head = data["head"]["vars"];
                 $rootScope.persons = $scope.results;
-                var sepp = angular.fromJson($scope.results);
+
 
             }).
             error(function (data, status, headers, config) {
@@ -48,7 +47,6 @@ personControllers.controller("PersonListCtrl", function ($rootScope, $scope, $ht
         console.log($scope.givenname);
 
         var pre = 'update=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
-        //var q =  'SELECT * WHERE {  ?subject a foaf:Person. optional {?subject foaf:givenname ?Vorname}. optional {?subject foaf:family_name ?Nachname}.  optional {?subject foaf:nick ?Spitzname}. } LIMIT 25';
 
         var stmt = 'INSERT DATA {' +
             ':' + $scope.givenname + ' a foaf:Person;' +
@@ -64,10 +62,6 @@ personControllers.controller("PersonListCtrl", function ($rootScope, $scope, $ht
 
 
 
-
-        //$scope.companies.push({ 'name':$scope.name, 'employees': $scope.employees, 'headoffice':$scope.headoffice });
-        // Writing it to the server
-        //
         $http.post("http://localhost:3030/test/update", pre + stmt, hd).
             success(function (data, status, headers, config) {
                 $scope.message = data;

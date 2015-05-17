@@ -5,9 +5,9 @@
 
             Search: <input ng-model="query">
             Sort by:
-            <select ng-model="orderProp">
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
+            <select ng-model="queryGender">
+                <option value="m&auml;nnlich">m&auml;nnlich</option>
+                <option value="weiblich">weiblich</option>
             </select>
 
         </div>
@@ -26,7 +26,7 @@
                     </tr>
                     </thead>
 
-                    <tbody ng-repeat="person in results | filter:query">
+                    <tbody ng-repeat="person in results | filter:query | filter:{ Geschlecht: queryGender }:strict">
                     <tr>
                         <td>
                             <a href="#/persons/{{person['Vorname']['value']}}">{{person["subject"]["value"]}}</a>
@@ -111,8 +111,8 @@
             <label class="col-md-2 control-label">Geschlecht</label>
 
             <div class="col-md-4">
-                <input type="radio" ng-model="gender" value="male" />male
-                <input type="radio" ng-model="gender" value="female" />female<br />
+                <input type="radio" ng-model="gender" value="m&auml;nnlich" />m&auml;nnlich
+                <input type="radio" ng-model="gender" value="weiblich" />weiblich<br />
             </div>
         </div>
 
