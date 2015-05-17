@@ -1,14 +1,11 @@
-'use strict';
+(function(angular) {
+  'use strict';
+  angular.module('scopeExample', [])
+      .controller('MyController', ['$scope', function($scope) {
+        $scope.username = 'World';
 
-angular.module('myApp.view1', ['ngRoute'])
-
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
-  });
-}])
-
-.controller('View1Ctrl', [function() {
-
-}]);
+        $scope.sayHello = function() {
+          $scope.greeting = 'Hello ' + $scope.username + '!';
+        };
+      }]);
+})(window.angular);

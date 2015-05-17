@@ -1,90 +1,65 @@
-/**
- * Created by Daniel on 14/05/15.
- */
-var SparqlClient = require('sparql-client');
-var util = require('util');
-var endpoint = 'http://dbpedia.org/sparql';
+var linkedController = angular.module('myModule', []);
 
 
-function getLocation(company){
-    var companyRecource = "<http://dbpedia.org/resource/"+company+">";
+linkedController.controller("myController", function ($rootScope, $scope, $http, $route) {
+    var hd = {
+        headers: {
+            Accept: 'application/sparql-results+json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
 
-    var locations = [];
-
-    var query = "SELECT * WHERE { "+companyRecource+" <http://dbpedia.org/property/locationCity> ?locationCity. } LIMIT 10";
-    var client = new SparqlClient(endpoint);
-    console.log("Query to " + endpoint);
-    console.log("Query: " + query);
-    client.query(query)
-
-        .execute(function(error, results) {
-            var result = (JSON.stringify(arguments, null, 20, true));
-
-            var parsed = JSON.parse(result);
-            parsed = parsed[1].results.bindings;
+    $scope.sparqlQueryLongitude = function () {
+        var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
+        var locationURI = "<http://dbpedia.org/resource/"+"Arbing"+">";
 
 
-
-            for(var x in parsed){
-                locations.push(parsed[x].locationCity.value);
+        var req = {
+            method: 'GET',
+            url: 'http://dbpedia.org/sparql',
+            headers: { 'Content-type' : 'application/x-www-form-urlencoded',
+                'Accept' : 'application/sparql-results+json' },
+            params: {
+                query : "SELECT * WHERE { "+locationURI+" geo:long ?long} LIMIT 10",
+                format: "json"
             }
+        };
 
-            var index;
+        console.log(req);
 
-            for (index = 0; index < locations.length; ++index) {
-                console.log(locations[index]);
+        $http(req).success(function(data) {
+            console.log(data);
+            var longi = JSON.stringify(data);
+            var longi = JSON.parse(longi);
+            $scope.long = longi.results.bindings[0].long.value;
+        });
+    };
+    $scope.sparqlQueryLongitude();
+
+    $scope.sparqlQueryLatitude = function () {
+        var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
+        var locationURI = "<http://dbpedia.org/resource/"+"Arbing"+">";
+
+
+        var req = {
+            method: 'GET',
+            url: 'http://dbpedia.org/sparql',
+            headers: { 'Content-type' : 'application/x-www-form-urlencoded',
+                'Accept' : 'application/sparql-results+json' },
+            params: {
+                query : "SELECT * WHERE { "+locationURI+" geo:lat ?lat} LIMIT 10",
+                format: "json"
             }
+        };
+
+        console.log(req);
+
+        $http(req).success(function(data) {
+            console.log(data);
+            var lati = JSON.stringify(data);
+            var lati = JSON.parse(lati);
+            $scope.lat = lati.results.bindings[0].lat.value;
         });
-
-        return locations;
-}
-
-function getLocationCoordinate(locationURI){
-
-   var coordinates = [];
-
-   var query = "SELECT * WHERE { "+locationURI+" geo:lat ?lat; geo:long ?long} LIMIT 10";
-   var client = new SparqlClient(endpoint);
-    console.log("Query to " + endpoint);
-    console.log("Query: " + query);
-    client.query(query)
-
-        .execute(function(error, results) {
-            var result = (JSON.stringify(arguments, null, 20, true));
-
-            var parsed = JSON.parse(result);
-            coordinates[0] = parsed[1].results.bindings[0].lat.value;
-            coordinates[1] = parsed[1].results.bindings[0].long.value;
-
-            console.log(coordinates[0]);
-            console.log(coordinates[1]);
-
-            //console.log(result);
-        });
-
-    return coordinates;
-}
-
-function getLocationLabel(locationURI){
-    var label;
-
-    var query = "SELECT * WHERE { "+locationURI+" rdfs:label ?label FILTER (lang (?label) = \"en\")} LIMIT 10";
-    var client = new SparqlClient(endpoint);
-    console.log("Query to " + endpoint);
-    console.log("Query: " + query);
-    client.query(query)
-
-        .execute(function(error, results) {
-            var result = (JSON.stringify(arguments, null, 20, true));
-
-            var parsed = JSON.parse(result);
-            label = parsed[1].results.bindings[0].label.value;
-
-            console.log(label);
-        });
-
-    return label;
-}
-
-getLocationLabel("<http://dbpedia.org/resource/Armonk,_New_York"+">");
-//getLocation("IBM");
+    };
+    $scope.sparqlQueryLatitude();
+});

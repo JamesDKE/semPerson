@@ -3,9 +3,6 @@
 // Declare app level module which depends on views, and components
 var app = app || angular.module('myApp', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version',
     'personControllers',
     'ngMap'
 ]).
@@ -84,4 +81,69 @@ app.controller('MapCoordinatesCtrl', function($scope, $compile) {
             Math.floor($scope.pixelCoordinate.x / TILE_SIZE),
             Math.floor($scope.pixelCoordinate.y / TILE_SIZE));
     });
+});
+
+app.controller("linkedDataCtrl", function ($rootScope, $scope, $http, $route) {
+    var hd = {
+        headers: {
+            Accept: 'application/sparql-results+json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
+
+    $scope.sparqlQueryLongitude = function (loc) {
+        var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';        var locationURI = "<http://dbpedia.org/resource/"+$scope.loc+">";
+
+        var locationURI = "<http://dbpedia.org/page/"+loc+">";
+
+        var req = {
+            method: 'GET',
+            url: 'http://dbpedia.org/sparql',
+            headers: { 'Content-type' : 'application/x-www-form-urlencoded',
+                'Accept' : 'application/sparql-results+json' },
+            params: {
+                query : "SELECT * WHERE { "+locationURI+" geo:long ?long} LIMIT 10",
+                format: "json"
+            }
+        };
+
+        console.log(req);
+
+        $http(req).success(function(data) {
+            console.log(data);
+            var longi = JSON.stringify(data);
+            var longi = JSON.parse(longi);
+            $scope.long = longi.results.bindings[0].long.value;
+        });
+        //$scope.long = 14.290556;
+    };
+    //$scope.sparqlQueryLongitude();
+
+    $scope.sparqlQueryLatitude = function (loc) {
+        var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
+
+        var locationURI = "<http://dbpedia.org/page/"+loc+">";
+
+        var req = {
+            method: 'GET',
+            url: 'http://dbpedia.org/sparql',
+            headers: { 'Content-type' : 'application/x-www-form-urlencoded',
+                'Accept' : 'application/sparql-results+json' },
+            params: {
+                query : "SELECT * WHERE { "+locationURI+" geo:lat ?lat} LIMIT 10",
+                format: "json"
+            }
+        };
+
+        console.log(req);
+
+        $http(req).success(function(data) {
+            console.log(data);
+            var lati = JSON.stringify(data);
+            var lati = JSON.parse(lati);
+            $scope.lat = lati.results.bindings[0].lat.value;
+        });
+        //$scope.lat = 48.303056;
+    };
+    //$scope.sparqlQueryLatitude();
 });
