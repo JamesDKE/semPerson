@@ -2,8 +2,16 @@
 
 body {
   padding-top: 20px;
+  color: #c06c84;
+  background-color: #ececee;
+
 }
 
+.jumbotron {
+  color: #4c495a;
+  background-color: #ececee;
+  border: 1px solid grey;
+}
 
 .phone-images {
   background-color: white;
