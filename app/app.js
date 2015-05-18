@@ -91,10 +91,10 @@ app.controller("linkedDataCtrl", function ($rootScope, $scope, $http, $route) {
         }
     };
 
-    $scope.sparqlQueryLongitude = function (loc) {
-        var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';        var locationURI = "<http://dbpedia.org/resource/"+$scope.loc+">";
+    $scope.sparqlQueryLongitude = function () {
+        var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
+        var locationURI = "<http://dbpedia.org/resource/"+"Leipzig"+">";
 
-        var locationURI = "<http://dbpedia.org/page/"+loc+">";
 
         var req = {
             method: 'GET',
@@ -115,14 +115,13 @@ app.controller("linkedDataCtrl", function ($rootScope, $scope, $http, $route) {
             var longi = JSON.parse(longi);
             $scope.long = longi.results.bindings[0].long.value;
         });
-        //$scope.long = 14.290556;
     };
-    //$scope.sparqlQueryLongitude();
+    $scope.sparqlQueryLongitude();
 
-    $scope.sparqlQueryLatitude = function (loc) {
+    $scope.sparqlQueryLatitude = function () {
         var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
+        var locationURI = "<http://dbpedia.org/resource/"+"Leipzig"+">";
 
-        var locationURI = "<http://dbpedia.org/page/"+loc+">";
 
         var req = {
             method: 'GET',
@@ -143,7 +142,6 @@ app.controller("linkedDataCtrl", function ($rootScope, $scope, $http, $route) {
             var lati = JSON.parse(lati);
             $scope.lat = lati.results.bindings[0].lat.value;
         });
-        //$scope.lat = 48.303056;
     };
-    //$scope.sparqlQueryLatitude();
+    $scope.sparqlQueryLatitude();
 });

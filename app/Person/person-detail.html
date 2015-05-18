@@ -30,19 +30,16 @@
         </div>
     </div>
 
-    <div ng-controller="linkedDataCtrl">
-        {{loc = personData[7].value;}}
-       {{sparqlQueryLongitude(loc)}}
-        {{sparqlQueryLatitude(loc)}}
-    </div>
+    <hr>
 
-    <div ng-controller="linkedDataCtrl">
+    <div ng-app="myModule" ng-controller="linkedDataCtrl">
+
         <div ng-app="myapp" ng-controller="MapCoordinatesCtrl" class="ng-scope">
                 <map center="{{lat}} {{long}}" zoom="8">
                     <marker position="{{lat}} {{long}}" zoom="8"></marker>
                     <info-window id="1" position="{{lat}} {{long}}" visible="true">
                         <div ng-non-bindable="">
-                            {{loc}} {{lat}} {{long}}
+                            {{lat}} {{long}}
                         </div>
                     </info-window>
                 </map>
