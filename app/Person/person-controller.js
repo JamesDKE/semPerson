@@ -114,10 +114,8 @@ personControllers.controller('PersonDetailCtrl', ['$rootScope', '$scope', '$rout
             }
         };
 
-
         var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
         var q = 'select *  WHERE {<http://example.org/' + $routeParams.personId + '> ?p ?o }  limit 100';
-
         $http.post("http://localhost:3030/test/query", pre + q, hd).
             success(function (data, status, headers, config) {
 
@@ -135,15 +133,10 @@ personControllers.controller('PersonDetailCtrl', ['$rootScope', '$scope', '$rout
                     tmp2[i] = [];
                     tmp2[i].property =  $scope.result[i].p.value;
                     tmp2[i].value =  $scope.result[i].o.value;
-                    console.log('GEÄNDERT: '+tmp[i].value +' : '+tmp[i].property);
+
                 }
-                //var tmp2 = angular.copy(tmp);
-
                 $scope.personData = tmp;
-
                 $scope.personDataOrig = tmp2;
-
-
             }).
             error(function (data, status, headers, config) {
                 // log error
