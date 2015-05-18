@@ -93,7 +93,7 @@ app.controller("linkedDataCtrl", function ($rootScope, $scope, $http, $route) {
 
     $scope.sparqlQueryLongitude = function () {
         var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
-        var locationURI = "<http://dbpedia.org/resource/"+"Leipzig"+">";
+        var locationURI = "<http://dbpedia.org/resource/"+"Linz"+">";
 
 
         var req = {
@@ -120,7 +120,7 @@ app.controller("linkedDataCtrl", function ($rootScope, $scope, $http, $route) {
 
     $scope.sparqlQueryLatitude = function () {
         var pre = 'query=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
-        var locationURI = "<http://dbpedia.org/resource/"+"Leipzig"+">";
+        var locationURI = "<http://dbpedia.org/resource/"+"Linz"+">";
 
 
         var req = {

@@ -20,7 +20,7 @@
     <div class="form-group" ng-repeat="p in personData">
         <label for="inputEmail3" class="col-sm-2 control-label">{{p.property.substr(p.property.lastIndexOf('/')+1)}}</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputEmail3" ng-model="p.value"  value="{{p.value}}">
+            <input type="text" ng-style="{'width':'30%'}" class="form-control" id="inputEmail3" ng-model="p.value"  value="{{p.value}}">
         </div>
     </div>
 
@@ -30,21 +30,20 @@
         </div>
     </div>
 
-    <hr>
-
     <div ng-app="myModule" ng-controller="linkedDataCtrl">
 
-        <div ng-app="myapp" ng-controller="MapCoordinatesCtrl" class="ng-scope">
-                <map center="{{lat}} {{long}}" zoom="8">
-                    <marker position="{{lat}} {{long}}" zoom="8"></marker>
-                    <info-window id="1" position="{{lat}} {{long}}" visible="true">
-                        <div ng-non-bindable="">
-                            {{lat}} {{long}}
-                        </div>
-                    </info-window>
-                </map>
-            </div>
+        <div ng-app="myapp" ng-controller="MapCoordinatesCtrl" class="ng-scope" ng-style="offsetLeft">
+            <map center="{{lat}} {{long}}" zoom="8" ng-style="{'width':'480px', 'height':'320px', 'margin-top':'10px', 'border':'solid 1px black', 'background-color':'#ff0000' }">
+                <marker position="{{lat}} {{long}}" zoom="8"></marker>
+                <info-window id="1" position="{{lat}} {{long}}" visible="true">
+                    <div ng-non-bindable="">
+                        {{lat}} {{long}}
+                    </div>
+                </info-window>
+            </map>
+        </div>
     </div>
+
 </form>
 
 </body>
