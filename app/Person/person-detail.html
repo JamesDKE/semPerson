@@ -29,22 +29,21 @@
             <button type="submit" class="btn btn-default">Speichern</button>
         </div>
     </div>
-
-    <div ng-app="myModule" ng-controller="linkedDataCtrl" ng-style="{'width':'480px', 'height':'320px', 'margin-top':'10px', 'border':'solid 1px black', 'background-color':'#ff0000' }">
-
-        <div ng-app="myapp" ng-controller="MapCoordinatesCtrl" class="ng-scope">
-            <map center="{{lat}} {{long}}" zoom="8">
-                <marker position="{{lat}} {{long}}" zoom="8"></marker>
-                <info-window id="1" position="{{lat}} {{long}}" visible="true">
-                    <div ng-non-bindable="">
-                        {{lat}} {{long}}
-                    </div>
-                </info-window>
-            </map>
-        </div>
-    </div>
-
 </form>
+
+<div ng-app="myModule" ng-controller="linkedDataCtrl" ng-style="{'position':'absolute', 'left':'650', 'bottom':'-60', 'width':'640px', 'height':'480px', 'margin-top':'10px', 'border':'solid 1px black', 'background-color':'#ff0000' }">
+
+    <div ng-app="myapp" ng-controller="MapCoordinatesCtrl" class="ng-scope">
+        <map center="{{lat}} {{long}}" zoom="8">
+            <marker position="{{lat}} {{long}}" zoom="8"></marker>
+            <info-window id="1" position="{{lat}} {{long}}" visible="true">
+                <div ng-non-bindable="">
+                    {{lat}} {{long}}
+                </div>
+            </info-window>
+        </map>
+    </div>
+</div>
 
 </body>
 </html>
