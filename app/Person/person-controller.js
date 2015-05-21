@@ -43,9 +43,6 @@ personControllers.controller("PersonListCtrl", function ($rootScope, $scope, $ht
     }
 
     $scope.addRowAsyncAsJSON = function () {
-        console.log("hi im a function");
-        console.log($scope.givenname);
-
         var pre = 'update=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
 
         var stmt = 'INSERT DATA {' +
@@ -144,9 +141,6 @@ personControllers.controller('PersonDetailCtrl', ['$rootScope', '$scope', '$rout
 
 
         $scope.modifyRow = function (subject) {
-            console.log($scope.personData);
-
-
             var pre = 'update=PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> prefix owl: <http://www.w3.org/2002/07/owl#> prefix :      <http://example.org/> ';
 
             var delStr = '';
@@ -156,7 +150,7 @@ personControllers.controller('PersonDetailCtrl', ['$rootScope', '$scope', '$rout
             var wherestmt = '';
             for (i = $scope.result.length - 1; i >= 0; i--) {
                 if ($scope.personData[i].value != $scope.personDataOrig[i].value){
-                    console.log('GEÄNDERT: '+$scope.personData[i].value +' <> '+$scope.personDataOrig[i].value);
+
                     if (stmt == '') {
                         stmt = ' DELETE { ';
                     }
@@ -194,9 +188,6 @@ personControllers.controller('PersonDetailCtrl', ['$rootScope', '$scope', '$rout
                 }
 
                 stmt += wherestmt + '}';
-
-                console.log('Fertiges Statement: '+stmt);
-
 
                 $http.post("http://localhost:3030/test/update", pre + stmt, hd).
                     success(function (data, status, headers, config) {
